@@ -30,9 +30,9 @@ class RoleSeeder extends Seeder
         $tellerRole->givePermissionTo($manageTransactions);
 
         $adminUser = User::create([
-            'name' => 'User 1',
-            'email' => 'test@example.com',
-            'password' => bcrypt('password'),
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin111'),
         ]);
 
         $managerUser = User::create([
@@ -45,6 +45,12 @@ class RoleSeeder extends Seeder
             'name' => 'John Doe',
             'email' => 'john@gmail.com',
             'password' => bcrypt('teller111'),
+        ]);
+
+        $normarlUser = User::create([
+            'name' => 'harvey',
+            'email' => 'harvey@gmail.com',
+            'password' => bcrypt('harvey111'),
         ]);
 
         $adminUser->assignRole($adminRole);
