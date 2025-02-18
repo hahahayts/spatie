@@ -8,7 +8,6 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
 
-
 class RoleSeeder extends Seeder
 {
     /**
@@ -16,46 +15,34 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-
-        $manageUsers = Permission::create(['name' => 'manage-user']);
-        $manageAccounts = Permission::create(['name' => 'manage-accounts']);
+        // Create Permissions
+        $viewEvents = Permission::create(['name' => 'view-events']);
+        $manageEvents = Permission::create(['name' => 'manage-events']);
         $manageTransactions = Permission::create(['name' => 'manage-transactions']);
+        $manageManageUsers = Permission::create(['name' => 'manage-users']);
 
+        // Create Roles
         $adminRole = Role::create(['name' => 'admin']);
-        $accountManagerRole = Role::create(['name' => 'account-manager']);
-        $tellerRole = Role::create(['name' => 'teller']);
+        $userRole = Role::create(['name' => 'user']);
 
-        $adminRole->givePermissionTo([$manageUsers, $manageAccounts, $manageTransactions]);
-        $accountManagerRole->givePermissionTo([$manageAccounts, $manageTransactions]);
-        $tellerRole->givePermissionTo($manageTransactions);
+        // Assign Permissions to Roles
+        $adminRole->givePermissionTo([$viewEvents, $manageEvents, $manageTransactions, $manageManageUsers]);
+        $userRole->givePermissionTo([$viewEvents]);
 
+        // Create Users
         $adminUser = User::create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('admin111'),
         ]);
-
-        $managerUser = User::create([
-            'name' => 'Manager',
-            'email' => 'manager@gmail.com',
-            'password' => bcrypt('manager111'),
-        ]);
-
-        $tellerUser = User::create([
-            'name' => 'John Doe',
-            'email' => 'john@gmail.com',
-            'password' => bcrypt('teller111'),
-        ]);
-
-        $normarlUser = User::create([
+        $harvey = User::create([
             'name' => 'harvey',
             'email' => 'harvey@gmail.com',
             'password' => bcrypt('harvey111'),
         ]);
 
+        // Assign Roles to Users
         $adminUser->assignRole($adminRole);
-        $managerUser->assignRole($accountManagerRole);
-        $tellerUser->assignRole($tellerRole);
-
+        $harvey->assignRole($userRole);
     }
 }

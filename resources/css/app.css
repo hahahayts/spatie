@@ -17,3 +17,8 @@ input {
 .input {
     @apply flex flex-col gap-2;
 }
+
+table,
+th {
+    @apply p-3;
+}

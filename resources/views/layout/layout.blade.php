@@ -28,12 +28,17 @@
                     <li><a href="{{url('/transactions')}}" id="link">Transaction</a></li>                    
                 @endcan
                 <li><a href="{{url('#')}}" id="link">About Us</a></li>
+
+                   {{-- It will shown if it has an permission to manage trasaction --}}
+                   @role('admin')
+                   <li><a href="{{url('/users')}}" id="link">Users</a></li>                    
+               @endrole
             </ul>
 
             @auth
             <div class="flex space-x-2 items-center">
                 <span><i class="bi bi-person font-semibold text-xl"></i></span>
-                <span>{{ auth()->user()->name }}</s[an]>
+                <span>{{ auth()->user()->name }}</span>
             </div>
                 <form action="{{url('logout')}}">
                     @csrf
